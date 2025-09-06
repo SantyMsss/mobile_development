@@ -1,0 +1,2 @@
+Reemplaza este archivo por una imagen real (por ejemplo: foto.png) y actualiza la extensión en main.dart si cambias el nombre.
+Sugerencia: coloca una imagen 'local_photo.png' en esta carpeta.
