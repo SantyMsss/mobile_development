@@ -1,16 +1,78 @@
-# mobile_development
+## Taller 2 - Navegación y Widgets Avanzados
 
-A new Flutter project.
+### 📋 Requisitos Implementados
 
-## Getting Started
+#### 1. ✅ Navegación y paso de parámetros
+- **go_router** implementado para navegación
+- **Paso de parámetros** desde pantalla principal a pantalla secundaria (nombre y método de navegación)
+- **Diferencias demostradas**:
+  - `go()`: Reemplaza toda la pila de navegación (sin botón atrás automático)
+  - `push()`: Agrega a la pila (mantiene botón atrás)
+  - `pushReplacement()`: Reemplaza pantalla actual (sin regreso a la anterior)
 
-This project is a starting point for a Flutter application.
+#### 2. ✅ Widgets implementados
+- **GridView**: 8 elementos con colores diferentes y animaciones
+- **TabBar**: 3 pestañas (Inicio, Grid, Info) con contenido diferente
+- **BottomNavigationBar**: Navegación adicional (widget extra elegido)
+- **Stack**: Texto superpuesto sobre imagen en pantalla secundaria
 
-A few resources to get you started if this is your first Flutter project:
+#### 3. ✅ Ciclo de vida registrado
+Todos los métodos registran en consola con comentarios explicativos:
+- `initState()`: Inicialización una sola vez
+- `didChangeDependencies()`: Dependencias disponibles
+- `build()`: Construcción/reconstrucción del widget
+- `setState()`: Notificación de cambio de estado
+- `dispose()`: Limpieza de recursos
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### 📱 Estructura del Proyecto
+```
+lib/
+├── main.dart                 # Configuración go_router y app principal
+└── screens/
+    ├── home_screen.dart      # Pantalla principal con TabBar y widgets
+    └── details_screen.dart   # Pantalla secundaria con parámetros
+```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### 🔍 Características Destacadas
+
+**Pantalla Principal (HomeScreen):**
+- TabBar con 3 secciones diferentes
+- GridView colorido con 8 elementos
+- BottomNavigationBar funcional
+- Botones para demostrar diferentes tipos de navegación
+- Logs del ciclo de vida en consola
+
+**Pantalla Secundaria (DetailsScreen):**
+- Recibe y muestra parámetros de navegación
+- Stack con imagen y texto superpuesto
+- Explicación visual de diferencias de navegación
+- Contador con setState() para demostrar ciclo de vida
+
+### 🖥️ Logs de Consola Esperados
+Al ejecutar la app verás en consola:
+```
+🟢 HomeScreen: initState() - Widget creado e inicializado
+🔵 HomeScreen: didChangeDependencies() - Dependencias disponibles
+🟡 HomeScreen: build() - Widget siendo construido/reconstruido
+🔴 HomeScreen: setState() - Estado cambiando, se ejecutará build()
+🔴 HomeScreen: dispose() - Widget siendo eliminado, limpiando recursos
+```
+
+### ▶️ Ejecución
+```bash
+flutter pub get
+flutter run
+```
+
+### 🎯 Funcionalidades de Prueba
+1. **Cambiar título**: Botón que alterna AppBar y muestra logs de setState()
+2. **Navegación GO**: Sin botón atrás automático
+3. **Navegación PUSH**: Con botón atrás
+4. **Navegación REPLACE**: Reemplaza pantalla actual
+5. **TabBar**: Cambiar entre pestañas
+6. **GridView**: Visualizar elementos coloridos
+7. **BottomNavigation**: Navegar desde la barra inferior
+
+---
+**Autor**: Santiago Martinez Serna  
+**Taller**: Navegación y Widgets Avanzados con Flutter
