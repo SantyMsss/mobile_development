@@ -97,3 +97,6 @@ flutter run
 |:---:|:---:|:---:|
 | ![replace](docs/screenshots/image-13.png) <br> pushReplacement() | ![consola-replace](docs/screenshots/image-14.png) <br> Consola | ![no-regresar](docs/screenshots/image-17.png) <br> No volver |
 
+
+---
+Autor: Santiago Martinez Serna - 230222014
