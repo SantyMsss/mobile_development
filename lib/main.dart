@@ -1,41 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'screens/home_screen.dart';
-import 'screens/details_screen.dart';
+// Imports centralizados (router y theme)
+import 'routes/app_router.dart';
+import 'themes/app_theme.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
+  const MyApp({super.key});
 
-  // Configuración de go_router
-  final GoRouter _router = GoRouter(
-    initialLocation: '/',
-    routes: [
-      // Ruta principal
-      GoRoute(
-        path: '/',
-        builder: (context, state) => const HomeScreen(),
-      ),
-      // Ruta secundaria con parámetros
-      GoRoute(
-        path: '/details',
-        builder: (context, state) {
-          final name = state.uri.queryParameters['name'] ?? 'Ciclista';
-          final from = state.uri.queryParameters['from'] ?? 'unknown';
-          return DetailsScreen(name: name, from: from);
-        },
-      ),
-    ],
-  );
+  // Use centralized router from routes/app_router.dart
+  static final router = AppRouter.router;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'Mundial 2024 - Mundial de Ciclismo',
       debugShowCheckedModeBanner: false,
+<<<<<<< HEAD
+      theme: AppTheme.theme,
+      routerConfig: router,
+=======
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
           seedColor: const Color(0xFFE60000), 
@@ -49,6 +35,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       routerConfig: _router,
+>>>>>>> abdcbb7df1cc59d58c16b5f5cef2cb1510ccb09f
     );
   }
 }
