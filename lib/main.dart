@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFFE60000), // Rojo UCI
+          seedColor: const Color(0xFFE60000), 
           primary: const Color(0xFFE60000),
           secondary: const Color(0xFF007AFF),
         ),
