@@ -9,7 +9,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  String appBarTitle = "Tour de Flutter";
+  String appBarTitle = "Mundial 2024";
   final String studentName = "Santiago Martinez Serna";
   int _currentTabIndex = 0;
 
@@ -109,13 +109,13 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 _buildCyclistCard(
-                  "https://olimpicocol.co/web/wp-content/uploads/2024/09/Seleccion-Colombia-Mundial-de-ciclsimo-de-Ruta-Zurich-2024.png",
-                  "Selección Colombia Mundial 2024"
+                  "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Jonas_Vingegaard_-_2022.jpg/250px-Jonas_Vingegaard_-_2022.jpg",
+                  "Candidato 1"
                 ),
                 
                 _buildCyclistCard(
-                  "https://cdn.pixabay.com/photo/2013/07/12/18/39/mountain-bike-153632_1280.png",
-                  "Bicicleta de montaña"
+                  "https://s1.sportstatics.com/relevo/www/multimedia/202411/23/media/cortadas/tadej-pogacar-afp-Rb6dqhzuwn1GkzJI60aezGO-1200x648@Relevo.jpg",
+                  "Candidato 2"
                 ),
               ],
             ),
@@ -343,7 +343,7 @@ class _HomeScreenState extends State<HomeScreen> {
           // Mostrar SnackBar con información rápida
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: const Text("Configuración del Tour de Flutter"),
+              content: const Text("Configuración del Mundial 2024"),
               duration: const Duration(seconds: 2),
               behavior: SnackBarBehavior.floating,
               shape: RoundedRectangleBorder(
