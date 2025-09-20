@@ -176,58 +176,37 @@ flutter analyze
 
 ---
 
-## 📷 Capturas de Pantalla
 
-### Vista previa (miniaturas)
-
-| Inicio | go() (destino) | go() (consola) |
-|---:|:---:|:---:|
-| ![Inicio](docs/screenshots/image.png) <br> Inicio | ![go](docs/screenshots/image-1.png) <br> go() | ![consola-go](docs/screenshots/image-2.png) <br> Consola |
-
-| Añadir KM | Consola (Añadir KM) | Regresar |
-|:---:|:---:|:---:|
-| ![añadir](docs/screenshots/image-3.png) <br> Añadir KM | ![consola-add](docs/screenshots/image-4.png) <br> Consola | ![regresar](docs/screenshots/image-5.png) <br> Regresar |
-
-| push() (destino) | push() (consola) | push() - interacción |
-|:---:|:---:|:---:|
-| ![push](docs/screenshots/image-7.png) <br> push() | ![consola-push](docs/screenshots/image-8.png) <br> Consola | ![push-add](docs/screenshots/image-9.png) <br> Añadir KM |
-
-| replace (destino) | replace (consola) | intentar regresar tras replace |
-|:---:|:---:|:---:|
-| ![replace](docs/screenshots/image-13.png) <br> pushReplacement() | ![consola-replace](docs/screenshots/image-14.png) <br> Consola | ![no-regresar](docs/screenshots/image-17.png) <br> No volver |
-
----
-
-## 📸 Galería de Capturas - Versión Actualizada
+## 📸 Galería de Capturas
 
 ### 🏠 **Pantallas Principales de la App**
 
 | Inicio | Clasificación | Información |
 |:---:|:---:|:---:|
-| ![Inicio App](image-3.png) <br> **🚴‍♂️ Pantalla Principal** | ![Clasificación](image-10.png) <br> **🏆 Tab Clasificación** | ![Información](image-11.png) <br> **ℹ️ Tab Información** |
+| ![Inicio App](docs/screenshots/image-3.png) <br> **🚴‍♂️ Pantalla Principal** | ![Clasificación](docs/screenshots/image-10.png) <br> **🏆 Tab Clasificación** | ![Información](docs/screenshots/image-11.png) <br> **ℹ️ Tab Información** |
 
 ### 🧭 **Navegación desde Barra Inferior**
 
 | Navegación NavBar | Consola NavBar |
 |:---:|:---:|
-| ![NavBar](image-12.png) <br> **📱 Barra de Navegación** | ![Consola NavBar](image-13.png) <br> **📊 Logs de NavBar** |
+| ![NavBar](docs/screenshots/image-12.png) <br> **📱 Barra de Navegación** | ![Consola NavBar](docs/screenshots/image-13.png) <br> **📊 Logs de NavBar** |
 
 ### 🚀 **Métodos de Navegación con Paso de Parámetros**
 
 #### 🔴 **Navegación con GO**
 | Pantalla Destino | Logs en Consola |
 |:---:|:---:|
-| ![GO Destino](image-4.png) <br> **context.go()** | ![GO Consola](image-5.png) <br> **📦 Parámetros GO** |
+| ![GO Destino](docs/screenshots/image-4.png) <br> **context.go()** | ![GO Consola](docs/screenshots/image-5.png) <br> **📦 Parámetros GO** |
 
 #### 🟢 **Navegación con PUSH**
 | Pantalla Destino | Logs en Consola |
 |:---:|:---:|
-| ![PUSH Destino](image-6.png) <br> **context.push()** | ![PUSH Consola](image-7.png) <br> **📦 Parámetros PUSH** |
+| ![PUSH Destino](docs/screenshots/image-6.png) <br> **context.push()** | ![PUSH Consola](docs/screenshots/image-7.png) <br> **📦 Parámetros PUSH** |
 
 #### 🟣 **Navegación con REPLACE**
 | Pantalla Destino | Logs en Consola |
 |:---:|:---:|
-| ![REPLACE Destino](image-8.png) <br> **context.pushReplacement()** | ![REPLACE Consola](image-9.png) <br> **📦 Parámetros REPLACE** |
+| ![REPLACE Destino](docs/screenshots/image-8.png) <br> **context.pushReplacement()** | ![REPLACE Consola](docs/screenshots/image-9.png) <br> **📦 Parámetros REPLACE** |
 
 
 
