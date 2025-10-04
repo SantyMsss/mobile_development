@@ -2,20 +2,24 @@
 
 ## 📋 Descripción del Proyecto
 
-Aplicación Flutter desarrollada para demostrar **navegación con paso de parámetros** y el **ciclo de vida de widgets** en Flutter. La app simula una aplicación del Mundial de Ciclismo 2024 con diferentes métodos de navegación y seguimiento completo del ciclo de vida.
+Aplicación Flutter desarrollada para demostrar **procesamiento en segundo plano** con enfoque en ciclismo mundial. La app implementa Future/async/await, Timer e Isolate para simular análisis de datos ciclistas, cronometraje y procesamiento pesado de información del Mundial de Ciclismo 2024.
 
 ## 🎯 Objetivos del Taller
 
-### ✅ **Navegación y Paso de Parámetros**
-- Implementar diferentes métodos de navegación con **Go Router**
-- Demostrar paso de parámetros entre pantallas
-- Mostrar diferencias entre `go()`, `push()` y `pushReplacement()`
-- Logs detallados en consola del paso de parámetros
+### ✅ **Future / async / await**
+- Demostrar asincronía para carga de datos de ciclistas
+- Implementar estados de carga y manejo de errores
+- Simular obtención de datos desde servidor
 
-### ✅ **Ciclo de Vida de Widgets**
-- Implementar y registrar todos los métodos del ciclo de vida
-- Mostrar logs tanto en consola como en pantalla
-- Demostrar el comportamiento en diferentes tipos de navegación
+### ✅ **Timer**
+- Cronómetro preciso para entrenamientos ciclistas
+- Control completo: iniciar, pausar, reanudar y resetear
+- Actualización en tiempo real cada 100ms
+
+### ✅ **Isolate**
+- Procesamiento pesado de análisis ciclistas sin bloquear UI
+- Comunicación entre hilos principal y worker
+- Compatibilidad multiplataforma (native + web)
 
 ## 🏗️ Arquitectura del Proyecto
 
@@ -26,16 +30,16 @@ lib/
 │   └── app_router.dart         # Configuración de rutas con Go Router
 ├── views/
 │   ├── home/
-│   │   └── home_screen.dart    # Pantalla principal con TabBar
-│   ├── details/
-│   │   └── details_screen.dart # Pantalla de detalles con parámetros
-│   └── ciclo_vida/
-│       └── ciclo_vida_screen.dart # Pantalla dedicada al ciclo de vida
+│   │   └── home_screen.dart    # Pantalla principal con drawer
+│   ├── future/
+│   │   └── future_view.dart    # Demostración Future/async/await
+│   ├── timer/
+│   │   └── timer_view.dart     # Cronómetro con Timer.periodic
+│   └── isolate/
+│       └── isolate_view.dart   # Procesamiento pesado con Isolate
 ├── widgets/
-│   ├── cyclist_card.dart       # Tarjeta de ciclista
-│   ├── stage_button.dart       # Botón de etapa personalizado
-│   ├── custom_navbar.dart      # Barra de navegación inferior
-│   └── base_view.dart          # Vista base reutilizable
+│   ├── cycling_drawer.dart     # Menú lateral temático
+│   └── base_view.dart          # Vista base con drawer
 └── themes/
     └── app_theme.dart          # Tema de la aplicación
 ```
@@ -43,10 +47,107 @@ lib/
 ## 🚀 Funcionalidades Implementadas
 
 ### 🏠 **Pantalla Principal (HomeScreen)**
-- **TabBar** con 3 pestañas:
-  - 🚴‍♂️ **Carrera**: Botones de navegación y información del estudiante
-  - 🏆 **Clasificación**: Ranking de ciclistas
-  - ℹ️ **Información**: Detalles del evento y desarrollador
+- Mensaje inspiracional sobre la pasión por el ciclismo
+- Navegación via menú lateral (Drawer)
+- Acceso directo a todas las funcionalidades
+
+### � **Future View (Asincronía)**
+- Carga asíncrona de datos de ciclistas profesionales
+- Estados de UI: loading, success, error
+- Simulación de conexión a servidor (2-3 segundos)
+
+### ⏱️ **Timer View (Cronómetro)**
+- Cronómetro de precisión para entrenamientos
+- Controles: Iniciar, Pausar, Reanudar, Resetear
+- Actualización cada 100ms
+
+### �️ **Isolate View (Procesamiento Pesado)**
+- Análisis de 50,000 puntos de datos ciclistas
+- Comunicación bidireccional con worker thread
+- Compatibilidad web (compute) y nativa (Isolate.spawn)
+
+## 🧪 Guía de Pruebas
+
+### 1. **Probar Future/async/await**
+1. Ve a "Future View" desde el drawer
+2. Observa el estado de loading inicial
+3. Espera 2-3 segundos para ver los datos cargados
+4. Verifica el manejo de errores si falla la conexión
+
+### 2. **Probar Timer (Cronómetro)**
+1. Ve a "Timer View" desde el drawer
+2. Presiona "Iniciar" y observa el cronómetro
+3. Prueba "Pausar" y "Reanudar"
+4. Usa "Resetear" para volver a 00:00:00
+
+### 3. **Probar Isolate (Procesamiento Pesado)**
+1. Ve a "Isolate View" desde el drawer
+2. Presiona "Procesar Datos Pesados"
+3. Observa que la UI no se bloquea durante el procesamiento
+4. Ve el resultado del análisis de 50,000 datos
+
+## 📸 Demostración del Taller - Procesamiento en Segundo Plano
+
+### 🏠 **Pantalla Principal - Opciones del Drawer**
+| Menú Principal |
+|:---:|
+| ![Opciones](docs/screenshots/options.png) |
+| **� Menú lateral con acceso a todas las funcionalidades** |
+
+### 🔮 **1. Future / async / await - Carga Asíncrona de Datos**
+
+| Estado de Carga | Datos Cargados | Logs en Consola |
+|:---:|:---:|:---:|
+| ![Cargando](docs/screenshots/chargingasync.png) | ![Ciclistas](docs/screenshots/ciclistas.png) | ![Consola Async](docs/screenshots/consolaasync.png) |
+| **⏳ Loading State** | **✅ Datos de Ciclistas** | **📊 Logs de Async/Await** |
+
+**Funcionalidad demostrada:**
+- ✅ Carga asíncrona con `Future.delayed()`
+- ✅ Estados de UI: loading → success
+- ✅ Simulación de obtención de datos desde servidor
+- ✅ Manejo de errores y logs detallados
+
+### ⏱️ **2. Timer - Cronómetro de Precisión**
+
+| Cronómetro Iniciado | Cronómetro Pausado | Cronómetro Reiniciado | Logs en Consola |
+|:---:|:---:|:---:|:---:|
+| ![Timer Inicio](docs/screenshots/timerpausa.png) | ![Timer Pausado](docs/screenshots/timerpausa2.png) | ![Timer Reset](docs/screenshots/reinicio.png) | ![Consola Timer](docs/screenshots/constimer.png) |
+| **▶️ Estado: Ejecutando** | **⏸️ Estado: Pausado** | **🔄 Estado: Reiniciado** | **📊 Logs de Timer** |
+
+**Funcionalidad demostrada:**
+- ✅ Timer.periodic con actualización cada 100ms
+- ✅ Control completo: Iniciar/Pausar/Reanudar/Resetear
+- ✅ Formato de tiempo preciso (HH:MM:SS)
+- ✅ Gestión de recursos con dispose()
+
+### � **3. Isolate - Procesamiento Pesado Sin Bloquear UI**
+
+| Estado Inicial | Procesamiento en Isolate | Logs en Consola |
+|:---:|:---:|:---:|
+| ![Isolate Inicio](docs/screenshots/isoinit.png) | ![Isolate Ejecutando](docs/screenshots/isoexe.png) | ![Consola Isolate](docs/screenshots/consiso.png) |
+| **� Listo para procesar** | **⚙️ Análisis de 50,000 datos** | **📊 Logs de Isolate** |
+
+**Funcionalidad demostrada:**
+- ✅ Procesamiento pesado sin bloquear UI principal
+- ✅ Comunicación bidireccional (SendPort/ReceivePort)
+- ✅ Compatibilidad multiplataforma (Isolate.spawn + compute)
+- ✅ Análisis de datos ciclistas en worker thread
+
+## 🎯 **Resultados del Taller**
+
+### ✅ **Objetivos Cumplidos:**
+1. **Future/async/await**: Carga asíncrona de datos con estados de UI 
+2. **Timer**: Cronómetro funcional con controles completos 
+3. **Isolate**: Procesamiento pesado sin bloqueo de UI 
+4. **Documentación**: README completo con diagramas y ejemplos 
+
+### 🚀 **Tecnologías Implementadas:**
+- **Asincronía**: Future, async/await para operaciones no bloqueantes
+- **Temporizadores**: Timer.periodic para cronometraje de precisión
+- **Concurrencia**: Isolate.spawn + compute() para procesamiento paralelo
+- **UI/UX**: Estados de carga, feedback visual, logs detallados
+
+---
 
 - **Navegación con Paso de Parámetros**:
   - 🔴 **GO**: `context.go()` - Reemplaza toda la pila
@@ -129,90 +230,38 @@ git clone [url-del-repo]
 cd mobile_development
 
 # Instalar dependencias
+## 🛠️ Tecnologías Utilizadas
+
+- **Flutter**: Framework de desarrollo multiplataforma
+- **Dart**: Lenguaje de programación
+- **Go Router**: Navegación declarativa
+- **Material Design**: Sistema de diseño
+- **Isolate**: Concurrencia nativa de Dart
+- **Timer**: API nativa para temporizadores
+
+## 🚀 Cómo Ejecutar
+
+```bash
+# Clonar el repositorio
+git clone [URL_DEL_REPO]
+
+# Navegar al directorio
+cd mobile_development
+
+# Obtener dependencias
 flutter pub get
 
-# Ejecutar en modo debug
+# Ejecutar en dispositivo/emulador
 flutter run
 
-# Analizar código
-flutter analyze
+# Para web específicamente
+flutter run -d chrome
+
+# Para Windows
+flutter run -d windows
 ```
 
-## 🧪 Guía de Pruebas
-
-### 1. **Probar Navegación y Parámetros**
-1. Ejecuta la app con `flutter run`
-2. En la pestaña "Carrera", prueba los 3 botones:
-   - 🔴 "Navegar con GO"
-   - 🟢 "Navegar con PUSH" 
-   - 🟣 "Navegar con REPLACE"
-3. Observa en consola los logs de parámetros
-4. Verifica el comportamiento del botón "Volver"
-
-### 2. **Observar Ciclo de Vida**
-1. Ve a cualquier pantalla de detalles
-2. Observa los logs del ciclo de vida en:
-   - **Consola**: Para desarrollo/debug
-   - **Pantalla**: En la sección "Ciclo de Vida"
-3. Prueba navegar de vuelta para ver `dispose()`
-
-### 3. **Navegación desde Otras Fuentes**
-1. Usa la **barra de navegación inferior**
-2. Prueba el botón "Navegar" (ítem 2)
-3. Verifica que también muestra logs de parámetros
-
-## 📊 Tecnologías Utilizadas
-
-- **Flutter** (>=3.24.5)
-- **Dart** (>=3.5.4)
-- **go_router** (^14.8.1) - Navegación declarativa
-- **Material Design 3** - Sistema de diseño
-
-## 👨‍💻 Desarrollador
-
-**Santiago Martinez Serna**  
-🎓 Ingeniería de Sistemas  
-📚 Desarrollo Móvil - 7° Semestre
-
----
-
-
-## 📸 Galería de Capturas
-
-### 🏠 **Pantallas Principales de la App**
-
-| Inicio | Clasificación | Información |
-|:---:|:---:|:---:|
-| ![Inicio App](docs/screenshots/image-3.png) <br> **🚴‍♂️ Pantalla Principal** | ![Clasificación](docs/screenshots/image-10.png) <br> **🏆 Tab Clasificación** | ![Información](docs/screenshots/image-11.png) <br> **ℹ️ Tab Información** |
-
-### 🧭 **Navegación desde Barra Inferior**
-
-| Navegación NavBar | Consola NavBar |
-|:---:|:---:|
-| ![NavBar](docs/screenshots/image-12.png) <br> **📱 Barra de Navegación** | ![Consola NavBar](docs/screenshots/image-13.png) <br> **📊 Logs de NavBar** |
-
-### 🚀 **Métodos de Navegación con Paso de Parámetros**
-
-#### 🔴 **Navegación con GO**
-| Pantalla Destino | Logs en Consola |
-|:---:|:---:|
-| ![GO Destino](docs/screenshots/image-4.png) <br> **context.go()** | ![GO Consola](docs/screenshots/image-5.png) <br> **📦 Parámetros GO** |
-
-#### 🟢 **Navegación con PUSH**
-| Pantalla Destino | Logs en Consola |
-|:---:|:---:|
-| ![PUSH Destino](docs/screenshots/image-6.png) <br> **context.push()** | ![PUSH Consola](docs/screenshots/image-7.png) <br> **📦 Parámetros PUSH** |
-
-#### 🟣 **Navegación con REPLACE**
-| Pantalla Destino | Logs en Consola |
-|:---:|:---:|
-| ![REPLACE Destino](docs/screenshots/image-8.png) <br> **context.pushReplacement()** | ![REPLACE Consola](docs/screenshots/image-9.png) <br> **📦 Parámetros REPLACE** |
-
 
 
 ---
-
-**📅 Fecha**: Septiembre 2025  
-**🏫 Institución**: Unidad Central del Valle 
-**📚 Curso**: Desarrollo Móvil  
-**🎯 Proyecto**: Taller Paso de Parámetros y Ciclo de Vida
+*Desarrollado por Santiago Martinez - 230222014*
