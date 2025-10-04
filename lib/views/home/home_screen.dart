@@ -1,9 +1,7 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import '../../widgets/cyclist_card.dart';
-import '../../widgets/stage_button.dart';
 import '../../widgets/custom_navbar.dart';
+import '../../widgets/cycling_drawer.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -16,49 +14,6 @@ class _HomeScreenState extends State<HomeScreen> {
   String appBarTitle = "Mundial 2024";
   final String studentName = "Santiago Martinez Serna";
   int _currentTabIndex = 0;
-
-  // Funciones de navegación con logs de parámetros
-  void _navigateWithGo() {
-    final url = '/details?name=${Uri.encodeComponent(studentName)}&from=go';
-    if (kDebugMode) {
-      print("🚀=== NAVEGACIÓN CON GO ===");
-      print("📦 Parámetros siendo pasados:");
-      print("   • name: '$studentName'");
-      print("   • from: 'go'");
-      print("🌐 URL completa: '$url'");
-      print("⚡ Método: context.go() - Reemplaza toda la pila de navegación");
-      print("================================");
-    }
-    context.go(url);
-  }
-
-  void _navigateWithPush() {
-    final url = '/details?name=${Uri.encodeComponent(studentName)}&from=push';
-    if (kDebugMode) {
-      print("🚀=== NAVEGACIÓN CON PUSH ===");
-      print("📦 Parámetros siendo pasados:");
-      print("   • name: '$studentName'");
-      print("   • from: 'push'");
-      print("🌐 URL completa: '$url'");
-      print("⚡ Método: context.push() - Agrega a la pila de navegación");
-      print("================================");
-    }
-    context.push(url);
-  }
-
-  void _navigateWithReplace() {
-    final url = '/details?name=${Uri.encodeComponent(studentName)}&from=replace';
-    if (kDebugMode) {
-      print("🚀=== NAVEGACIÓN CON REPLACE ===");
-      print("📦 Parámetros siendo pasados:");
-      print("   • name: '$studentName'");
-      print("   • from: 'replace'");
-      print("🌐 URL completa: '$url'");
-      print("⚡ Método: context.pushReplacement() - Reemplaza pantalla actual");
-      print("================================");
-    }
-    context.pushReplacement(url);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,6 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         ),
+        drawer: const CyclingDrawer(),
         body: TabBarView(
           children: [
             _buildRaceTab(),
@@ -147,33 +103,104 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
 
           const SizedBox(height: 30),
-          const Text('Selecciona una etapa:',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-          const SizedBox(height: 16),
-
-          Wrap(
-            spacing: 10,
-            runSpacing: 10,
-            children: [
-              StageButton(
-                text: "Navegar con GO",
-                icon: Icons.flag,
-                color: Color(0xFFE60000),
-                onPressed: _navigateWithGo,
+          
+          // Mensaje sobre la pasión por el ciclismo
+          Container(
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [
+                  Color(0xFFFFD700), // Dorado
+                  Color(0xFFFFA500), // Naranja
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
               ),
-              StageButton(
-                text: "Navegar con PUSH",
-                icon: Icons.navigation,
-                color: Colors.green,
-                onPressed: _navigateWithPush,
-              ),
-              StageButton(
-                text: "Navegar con REPLACE",
-                icon: Icons.swap_horiz,
-                color: Colors.purple,
-                onPressed: _navigateWithReplace,
-              ),
-            ],
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.3),
+                  spreadRadius: 2,
+                  blurRadius: 8,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+            ),
+            child: Column(
+              children: [
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.favorite,
+                      color: Colors.red,
+                      size: 28,
+                    ),
+                    SizedBox(width: 8),
+                    Icon(
+                      Icons.pedal_bike,
+                      color: Colors.white,
+                      size: 32,
+                    ),
+                    SizedBox(width: 8),
+                    Icon(
+                      Icons.public,
+                      color: Colors.blue,
+                      size: 28,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                const Text(
+                  '🚴‍♂️ Pasión por el Ciclismo Mundial',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 12),
+                const Text(
+                  'Este desarrollo está inspirado en la gran pasión y gusto que tiene el desarrollador Santiago Martínez por el ciclismo de ruta. Un deporte que une países, culturas y personas bajo la misma emoción: la velocidad, la resistencia y la superación personal.',
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: Colors.white,
+                    height: 1.4,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 16),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 8,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: const Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.menu,
+                        color: Colors.white,
+                        size: 20,
+                      ),
+                      SizedBox(width: 8),
+                      Text(
+                        'Explora las funciones desde el menú lateral',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
 
           const SizedBox(height: 20),
@@ -365,20 +392,28 @@ class _HomeScreenState extends State<HomeScreen> {
             [
               _buildInfoRow('Estudiante:', studentName),
               _buildInfoRow('Materia:', 'Desarrollo Móvil'),
-              _buildInfoRow('Proyecto:', 'Taller Paso de Parámetros'),
+              _buildInfoRow('Proyecto:', 'Taller de Segundo Plano'),
               _buildInfoRow('Tecnología:', 'Flutter & Dart'),
+              _buildInfoRow('Inspiración:', 'Pasión por el ciclismo mundial'),
+              _buildInfoRow('Temática:', 'Une países y culturas'),
             ],
           ),
 
           const SizedBox(height: 16),
 
           _buildInfoCard(
-            'Funcionalidades',
+            'Funcionalidades Implementadas',
             [
-              _buildInfoRow('Navegación:', 'Go Router'),
-              _buildInfoRow('Paso de parámetros:', 'Query Parameters'),
-              _buildInfoRow('Diseño:', 'Material Design'),
-              _buildInfoRow('Responsive:', 'Adaptive UI'),
+              _buildInfoRow('Navegación:', 'Menú lateral desplegable'),
+              _buildInfoRow('Future/Async:', 'Ciclistas mundiales'),
+              _buildInfoRow('Timer:', 'Cronómetro de entrenamiento'),
+              _buildInfoRow('Isolate:', 'Análisis de rendimiento'),
+              _buildInfoRow('Ciclo de vida:', 'Estados de widgets'),
+              _buildInfoRow('Asincronia:', 'Future.delayed y await'),
+              _buildInfoRow('Precisión:', 'Timer cada 100ms'),
+              _buildInfoRow('CPU-Bound:', 'Cálculos en Isolate'),
+              _buildInfoRow('Diseño:', 'Material Design temático'),
+              _buildInfoRow('Responsive:', 'Adaptive UI ciclista'),
             ],
           ),
         ],
