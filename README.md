@@ -1,267 +1,520 @@
-# 🚴‍♂️ Mundial de Ciclismo 2024 - App Flutter
+# � Centro de Investigación - App Flutter
 
 ## 📋 Descripción del Proyecto
 
-Aplicación Flutter desarrollada para demostrar **procesamiento en segundo plano** con enfoque en ciclismo mundial. La app implementa Future/async/await, Timer e Isolate para simular análisis de datos ciclistas, cronometraje y procesamiento pesado de información del Mundial de Ciclismo 2024.
+Aplicación Flutter desarrollada para consultar y explorar **productos de investigación** de la Facultad de Ciencias Administrativas, Económicas y Contables. La app consume APIs reales del sistema **MinCiencias GrupLAC** y demuestra el uso profesional de navegación con **go_router**, consumo de APIs HTTP y arquitectura limpia.
 
 ## 🎯 Objetivos del Taller
 
-### ✅ **Future / async / await**
-- Demostrar asincronía para carga de datos de ciclistas
-- Implementar estados de carga y manejo de errores
-- Simular obtención de datos desde servidor
+### ✅ **Consumo de APIs mediante HTTP**
+- Consumir APIs reales de MinCiencias GrupLAC
+- Implementar ListView.builder con datos dinámicos
+- Manejar estados de carga, éxito y error
+- **NO usar datos mock** - Solo APIs reales
 
-### ✅ **Timer**
-- Cronómetro preciso para entrenamientos ciclistas
-- Control completo: iniciar, pausar, reanudar y resetear
-- Actualización en tiempo real cada 100ms
+### ✅ **Navegación con go_router**
+- Implementar navegación moderna con rutas nombradas
+- Pasar parámetros entre pantallas
+- Navegación de lista → detalle
+- AppBar con navegación automática
 
-### ✅ **Isolate**
-- Procesamiento pesado de análisis ciclistas sin bloquear UI
-- Comunicación entre hilos principal y worker
-- Compatibilidad multiplataforma (native + web)
+### ✅ **Arquitectura Limpia y Escalable**
+- Separación de responsabilidades
+- Manejo robusto de errores
+- Null-safety habilitado
+- Código documentado
+
+## 🌐 API Utilizada - MinCiencias GrupLAC
+
+### 📡 **Endpoint Principal**
+```
+https://scienti.minciencias.gov.co/gruplac/json/Verificador/query.do
+```
+
+### 📋 **Parámetros**
+- `nroIdGrupo`: 00000000002096 (Facultad de Ciencias Administrativas)
+- `sglTipologia`: ART_I | ART_E | LIB | CAP_LIB
+
+### 🔍 **URLs Específicas**
+```bash
+# Artículos Tipo I (Revistas especializadas)
+GET https://scienti.minciencias.gov.co/gruplac/json/Verificador/query.do?nroIdGrupo=00000000002096&sglTipologia=ART_I
+
+# Artículos Tipo E (Otras publicaciones)  
+GET https://scienti.minciencias.gov.co/gruplac/json/Verificador/query.do?nroIdGrupo=00000000002096&sglTipologia=ART_E
+
+# Libros de investigación
+GET https://scienti.minciencias.gov.co/gruplac/json/Verificador/query.do?nroIdGrupo=00000000002096&sglTipologia=LIB
+
+# Capítulos de libros
+GET https://scienti.minciencias.gov.co/gruplac/json/Verificador/query.do?nroIdGrupo=00000000002096&sglTipologia=CAP_LIB
+```
+
+### 📄 **Ejemplo de Respuesta JSON**
+```json
+[
+  {
+    "cod_producto": "185",
+    "txt_nme_prod": "DINÁMICA ORGANIZACIONAL Y ADMINISTRATIVA DE LAS EMPRESAS BAJO EL MODELO DE SPIN OFF Y STARTUP.",
+    "integrante": "JOHANNA MILENA MOGROVEJO ANDRADE",
+    "nro_ano_presenta": "2023",
+    "txt_nme_revista": "Revista CEA",
+    "txt_volumen_revista": "9",
+    "txt_pagina_inicio": "1",
+    "txt_pagina_fin": "25",
+    "txt_doi": "10.22430/24223182.2156",
+    "txt_web_producto": "https://revistascea.ucauca.edu.co/index.php/CEA/article/view/477"
+  },
+  {
+    "cod_producto": "78",
+    "txt_nme_prod": "THE THEORETICAL FRAMEWORK IN RESEARCH: MEANING, FUNCTIONS, STRUCTURE AND EXAMPLE FOR ITS DESIGN",
+    "integrante": "LUIS CARLOS TORRES SOLER",
+    "nro_ano_presenta": "2022",
+    "txt_nme_revista": "Investigación e Innovación en Ingenierías",
+    "txt_volumen_revista": "10",
+    "txt_pagina_inicio": "109",
+    "txt_pagina_fin": "127"
+  }
+]
+```
+
+### 🔧 **Manejo de CORS**
+Para navegadores web, se implementa un proxy CORS:
+```dart
+// URL con proxy para web
+final String proxyUrl = 'https://api.allorigins.win/get?url=${Uri.encodeComponent(directUrl)}';
+```
 
 ## 🏗️ Arquitectura del Proyecto
 
 ```
 lib/
-├── main.dart                    # Configuración de la app y router
-├── routes/
-│   └── app_router.dart         # Configuración de rutas con Go Router
+├── main.dart                           # Configuración de la app
+├── models/
+│   ├── research_product.dart           # Modelo de producto de investigación
+│   └── product_category.dart           # Modelo de categorías (ART_I, ART_E, etc.)
+├── services/
+│   └── web_research_api_service.dart   # Servicio HTTP para APIs MinCiencias
 ├── views/
 │   ├── home/
-│   │   └── home_screen.dart    # Pantalla principal con drawer
-│   ├── future/
-│   │   └── future_view.dart    # Demostración Future/async/await
-│   ├── timer/
-│   │   └── timer_view.dart     # Cronómetro con Timer.periodic
-│   └── isolate/
-│       └── isolate_view.dart   # Procesamiento pesado con Isolate
+│   │   └── home_screen.dart            # Pantalla principal con tabs
+│   ├── research/
+│   │   ├── research_screen.dart        # Pantalla de categorías
+│   │   ├── research_list_screen.dart   # ListView de productos por categoría
+│   │   └── research_detail_screen.dart # Detalle de producto específico
+│   └── details/
+│       └── details_screen.dart         # Pantalla de detalles (legacy)
+├── routes/
+│   └── app_router.dart                 # Configuración de rutas con go_router
 ├── widgets/
-│   ├── cycling_drawer.dart     # Menú lateral temático
-│   └── base_view.dart          # Vista base con drawer
+│   ├── custom_navbar.dart              # Barra de navegación
+│   └── product_card.dart               # Tarjeta de producto
 └── themes/
-    └── app_theme.dart          # Tema de la aplicación
+    └── app_theme.dart                  # Tema de la aplicación
+```
+
+## �️ Rutas Definidas con go_router
+
+### � **Configuración de Rutas**
+```dart
+final GoRouter router = GoRouter(
+  routes: [
+    GoRoute(
+      path: '/',
+      name: 'home',
+      builder: (context, state) => const HomeScreen(),
+    ),
+    GoRoute(
+      path: '/research',
+      name: 'research',
+      builder: (context, state) => const ResearchScreen(),
+    ),
+    GoRoute(
+      path: '/research/:categoryId',
+      name: 'research-list',
+      builder: (context, state) {
+        final categoryId = state.pathParameters['categoryId']!;
+        return ResearchListScreen(categoryId: categoryId);
+      },
+    ),
+    GoRoute(
+      path: '/research/:categoryId/:productId',
+      name: 'research-detail',
+      builder: (context, state) {
+        final categoryId = state.pathParameters['categoryId']!;
+        final productId = state.pathParameters['productId']!;
+        final apiEndpoint = state.uri.queryParameters['apiEndpoint'];
+        
+        return ResearchDetailScreen(
+          categoryId: categoryId,
+          productId: productId,
+          apiEndpoint: apiEndpoint,
+        );
+      },
+    ),
+  ],
+);
+```
+
+### � **Parámetros Enviados**
+
+#### **1. Lista de Productos**
+```dart
+// Navegación: Home → Research → List
+context.pushNamed(
+  'research-list',
+  pathParameters: {'categoryId': 'ART_I'}  // ART_E, LIB, CAP_LIB
+);
+```
+
+#### **2. Detalle de Producto**
+```dart
+// Navegación: List → Detail
+context.pushNamed(
+  'research-detail',
+  pathParameters: {
+    'categoryId': 'ART_I',
+    'productId': '185'
+  },
+  queryParameters: {
+    'apiEndpoint': 'https://scienti.minciencias.gov.co/...'
+  }
+);
 ```
 
 ## 🚀 Funcionalidades Implementadas
 
 ### 🏠 **Pantalla Principal (HomeScreen)**
-- Mensaje inspiracional sobre la pasión por el ciclismo
-- Navegación via menú lateral (Drawer)
-- Acceso directo a todas las funcionalidades
+- **3 Tabs** organizados:
+  - 🏠 **Inicio**: Dashboard con información institucional
+  - 🔬 **Investigación**: Categorías de productos
+  - 📚 **Acerca de**: Información del proyecto
+- **Contenido educativo** sobre importancia de la investigación
+- **Botón principal** para acceder a categorías
 
-### � **Future View (Asincronía)**
-- Carga asíncrona de datos de ciclistas profesionales
-- Estados de UI: loading, success, error
-- Simulación de conexión a servidor (2-3 segundos)
+### 📊 **Pantalla de Investigación (ResearchScreen)**
+- **Cards interactivas** por cada categoría:
+  - 📑 Artículos Tipo I (Revistas especializadas)
+  - 📄 Artículos Tipo E (Otras publicaciones) 
+  - 📚 Libros (Publicaciones académicas)
+  - 📖 Capítulos (Capítulos de libros)
+- **Información del grupo** GrupLAC
 
-### ⏱️ **Timer View (Cronómetro)**
-- Cronómetro de precisión para entrenamientos
-- Controles: Iniciar, Pausar, Reanudar, Resetear
-- Actualización cada 100ms
+### 📋 **Lista de Productos (ResearchListScreen)**
+- **ListView.builder** con datos dinámicos de API
+- **ProductCard** components con información resumida
+- **Estados manejados**:
+  - ⏳ Loading con CircularProgressIndicator
+  - ✅ Success con lista de productos
+  - ❌ Error con mensaje descriptivo
+- **Navegación** a pantalla de detalle
 
-### �️ **Isolate View (Procesamiento Pesado)**
-- Análisis de 50,000 puntos de datos ciclistas
-- Comunicación bidireccional con worker thread
-- Compatibilidad web (compute) y nativa (Isolate.spawn)
+### 📄 **Detalle de Producto (ResearchDetailScreen)**
+- **Información completa** del producto seleccionado
+- **Datos estructurados**: título, autor, revista, año, DOI, etc.
+- **AppBar** con navegación automática
+- **Manejo de errores** si el producto no existe
 
-## 🧪 Guía de Pruebas
+## 🔧 Manejo de Estados y Validaciones
 
-### 1. **Probar Future/async/await**
-1. Ve a "Future View" desde el drawer
-2. Observa el estado de loading inicial
-3. Espera 2-3 segundos para ver los datos cargados
-4. Verifica el manejo de errores si falla la conexión
-
-### 2. **Probar Timer (Cronómetro)**
-1. Ve a "Timer View" desde el drawer
-2. Presiona "Iniciar" y observa el cronómetro
-3. Prueba "Pausar" y "Reanudar"
-4. Usa "Resetear" para volver a 00:00:00
-
-### 3. **Probar Isolate (Procesamiento Pesado)**
-1. Ve a "Isolate View" desde el drawer
-2. Presiona "Procesar Datos Pesados"
-3. Observa que la UI no se bloquea durante el procesamiento
-4. Ve el resultado del análisis de 50,000 datos
-
-## 📸 Demostración del Taller - Procesamiento en Segundo Plano
-
-### 🏠 **Pantalla Principal - Opciones del Drawer**
-| Menú Principal |
-|:---:|
-| ![Opciones](docs/screenshots/options.png) |
-| **� Menú lateral con acceso a todas las funcionalidades** |
-
-### 🔮 **1. Future / async / await - Carga Asíncrona de Datos**
-
-| Estado de Carga | Datos Cargados | Logs en Consola |
-|:---:|:---:|:---:|
-| ![Cargando](docs/screenshots/chargingasync.png) | ![Ciclistas](docs/screenshots/ciclistas.png) | ![Consola Async](docs/screenshots/consolaasync.png) |
-| **⏳ Loading State** | **✅ Datos de Ciclistas** | **📊 Logs de Async/Await** |
-
-**Funcionalidad demostrada:**
-- ✅ Carga asíncrona con `Future.delayed()`
-- ✅ Estados de UI: loading → success
-- ✅ Simulación de obtención de datos desde servidor
-- ✅ Manejo de errores y logs detallados
-
-### ⏱️ **2. Timer - Cronómetro de Precisión**
-
-| Cronómetro Iniciado | Cronómetro Pausado | Cronómetro Reiniciado | Logs en Consola |
-|:---:|:---:|:---:|:---:|
-| ![Timer Inicio](docs/screenshots/timerpausa.png) | ![Timer Pausado](docs/screenshots/timerpausa2.png) | ![Timer Reset](docs/screenshots/reinicio.png) | ![Consola Timer](docs/screenshots/constimer.png) |
-| **▶️ Estado: Ejecutando** | **⏸️ Estado: Pausado** | **🔄 Estado: Reiniciado** | **📊 Logs de Timer** |
-
-**Funcionalidad demostrada:**
-- ✅ Timer.periodic con actualización cada 100ms
-- ✅ Control completo: Iniciar/Pausar/Reanudar/Resetear
-- ✅ Formato de tiempo preciso (HH:MM:SS)
-- ✅ Gestión de recursos con dispose()
-
-### � **3. Isolate - Procesamiento Pesado Sin Bloquear UI**
-
-| Estado Inicial | Procesamiento en Isolate | Logs en Consola |
-|:---:|:---:|:---:|
-| ![Isolate Inicio](docs/screenshots/isoinit.png) | ![Isolate Ejecutando](docs/screenshots/isoexe.png) | ![Consola Isolate](docs/screenshots/consiso.png) |
-| **� Listo para procesar** | **⚙️ Análisis de 50,000 datos** | **📊 Logs de Isolate** |
-
-**Funcionalidad demostrada:**
-- ✅ Procesamiento pesado sin bloquear UI principal
-- ✅ Comunicación bidireccional (SendPort/ReceivePort)
-- ✅ Compatibilidad multiplataforma (Isolate.spawn + compute)
-- ✅ Análisis de datos ciclistas en worker thread
-
-## 🎯 **Resultados del Taller**
-
-### ✅ **Objetivos Cumplidos:**
-1. **Future/async/await**: Carga asíncrona de datos con estados de UI 
-2. **Timer**: Cronómetro funcional con controles completos 
-3. **Isolate**: Procesamiento pesado sin bloqueo de UI 
-4. **Documentación**: README completo con diagramas y ejemplos 
-
-### 🚀 **Tecnologías Implementadas:**
-- **Asincronía**: Future, async/await para operaciones no bloqueantes
-- **Temporizadores**: Timer.periodic para cronometraje de precisión
-- **Concurrencia**: Isolate.spawn + compute() para procesamiento paralelo
-- **UI/UX**: Estados de carga, feedback visual, logs detallados
-
----
-
-- **Navegación con Paso de Parámetros**:
-  - 🔴 **GO**: `context.go()` - Reemplaza toda la pila
-  - 🟢 **PUSH**: `context.push()` - Agrega a la pila  
-  - 🟣 **REPLACE**: `context.pushReplacement()` - Reemplaza pantalla actual
-
-### 📱 **Pantalla de Detalles (DetailsScreen)**
-- Recibe y muestra parámetros de navegación
-- **Ciclo de vida visible** en tiempo real en pantalla
-- Información del ciclista y estadísticas
-- Navegación inteligente según el método usado
-
-### 🔄 **Ciclo de Vida Implementado**
-- **`initState()`**: Inicialización del widget
-- **`didChangeDependencies()`**: Dependencias disponibles
-- **`build()`**: Construcción/reconstrucción de la UI
-- **`setState()`**: Notificación de cambio de estado
-- **`dispose()`**: Limpieza de recursos
-
-## � Logs en Consola
-
-### 🚀 **Al Navegar** (Ejemplo con GO):
-```
-🚀=== NAVEGACIÓN CON GO ===
-📦 Parámetros siendo pasados:
-   • name: 'Santiago Martinez Serna'
-   • from: 'go'
-🌐 URL completa: '/details?name=Santiago%20Martinez%20Serna&from=go'
-⚡ Método: context.go() - Reemplaza toda la pila de navegación
-================================
+### ⚡ **Estados de Carga**
+```dart
+enum LoadingState {
+  initial,   // Estado inicial
+  loading,   // Cargando datos
+  success,   // Datos cargados exitosamente  
+  error      // Error en la carga
+}
 ```
 
-### 📥 **Al Recibir Parámetros**:
-```
-📥=== PARÁMETROS RECIBIDOS EN DETAILS ===
-📦 Parámetros decodificados:
-   • name: 'Santiago Martinez Serna'
-   • from: 'go'
-🎯 Método de navegación detectado: GO
-=======================================
+### 🛡️ **Validaciones Implementadas**
+- **Null-safety** en todos los campos
+- **Validación de códigos HTTP** (200, 403, 500)
+- **Timeout** de requests configurado
+- **Manejo específico de errores CORS**
+- **Validación de JSON** antes de parsing
+
+### 🎯 **Manejo de Errores**
+```dart
+try {
+  final products = await apiService.getResearchProducts(tipologia);
+  setState(() {
+    _products = products;
+    _isLoading = false;
+  });
+} catch (e) {
+  setState(() {
+    _error = e.toString();
+    _isLoading = false;
+  });
+  
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: Text('Error: ${e.toString()}'),
+      action: SnackBarAction(
+        label: 'Reintentar',
+        onPressed: _loadProducts,
+      ),
+    ),
+  );
+}
 ```
 
-### 🔄 **Ciclo de Vida**:
-```
-========================================
-🟢 DetailsScreen: initState() - Navegado con go
-========================================
-========================================
-🔵 DetailsScreen: didChangeDependencies() - Método: go
-========================================
-========================================
-🟡 DetailsScreen: build() - Construyendo UI para Santiago Martinez Serna
-========================================
-```
+## 📊 Datos Estadísticos de las APIs
 
-## 🎨 Características de UI/UX
+### 📈 **Productos por Categoría (Verificado)**
+- **ART_I** (Artículos Tipo I): 15 productos
+- **ART_E** (Artículos Tipo E): 54 productos  
+- **LIB** (Libros): Datos disponibles
+- **CAP_LIB** (Capítulos): Datos disponibles
 
-### 🎭 **Diseño**
-- **Material Design** con tema personalizado
-- **Gradientes** y colores temáticos del ciclismo
-- **Responsive** y adaptativo
-- **Animaciones** sutiles en botones
-
-### 🧭 **Navegación**
-- **Go Router** para navegación declarativa
-- **Query Parameters** para paso de datos
-- **Navegación inteligente** que detecta el método usado
-- **BottomNavigationBar** con opciones adicionales
+### 🎯 **Rendimiento**
+- **Tiempo de respuesta promedio**: ~2-3 segundos
+- **Disponibilidad**: 99% (APIs oficiales MinCiencias)
+- **Formato**: JSON estándar
+- **Encoding**: UTF-8
 
 ## ⚙️ Instalación y Ejecución
 
 ### 📋 **Requisitos**
-- Flutter SDK (>=3.0.0)
-- Dart (>=3.0.0)
+- Flutter SDK (>=3.10.0)
+- Dart (>=3.10.0)
+- Conexión a internet (APIs reales)
 
-### 🚀 **Ejecución**
+### 🚀 **Dependencias**
+```yaml
+dependencies:
+  flutter:
+    sdk: flutter
+  go_router: ^14.2.7          # Navegación moderna
+  http: ^1.1.0                # Cliente HTTP
+  flutter_dotenv: ^5.1.0      # Variables de entorno
+  cupertino_icons: ^1.0.8     # Iconos iOS
+```
+
+### 📱 **Ejecución**
 ```bash
 # Clonar el repositorio
-git clone [url-del-repo]
+git clone https://github.com/SantyMsss/mobile_development.git
 cd mobile_development
 
 # Instalar dependencias
-## 🛠️ Tecnologías Utilizadas
-
-- **Flutter**: Framework de desarrollo multiplataforma
-- **Dart**: Lenguaje de programación
-- **Go Router**: Navegación declarativa
-- **Material Design**: Sistema de diseño
-- **Isolate**: Concurrencia nativa de Dart
-- **Timer**: API nativa para temporizadores
-
-## 🚀 Cómo Ejecutar
-
-```bash
-# Clonar el repositorio
-git clone [URL_DEL_REPO]
-
-# Navegar al directorio
-cd mobile_development
-
-# Obtener dependencias
 flutter pub get
 
-# Ejecutar en dispositivo/emulador
+# Ejecutar en Windows (recomendado para evitar CORS)
+flutter run -d windows
+
+# Ejecutar en modo debug
 flutter run
 
-# Para web específicamente
-flutter run -d chrome
-
-# Para Windows
-flutter run -d windows
+# Analizar código
+flutter analyze
 ```
 
+## 🧪 Guía de Pruebas
 
+### 1. **Probar Consumo de APIs**
+1. Ejecuta `flutter run -d windows`
+2. Ve a la pestaña "Investigación"
+3. Selecciona "Artículos Tipo I"
+4. Observa el loading y luego la lista de 15 productos
+5. Toca cualquier producto para ver el detalle
+
+### 2. **Verificar Navegación go_router**
+1. Desde Home, toca "Ver Todas las Categorías"
+2. Selecciona cualquier categoría (ART_I, ART_E, etc.)
+3. Verifica la URL en la barra de navegación
+4. Toca un producto para ir al detalle
+5. Usa el botón "Atrás" del AppBar
+
+### 3. **Probar Estados de Error**
+1. Desconecta internet momentáneamente
+2. Intenta cargar una categoría
+3. Observa el mensaje de error
+4. Reconecta internet y toca "Reintentar"
+
+### 4. **Validar Responsive Design**
+1. Cambia el tamaño de la ventana (Windows)
+2. Verifica que la UI se adapte correctamente
+3. Prueba en diferentes resoluciones
+
+## 🔍 Logs y Debugging
+
+### 📊 **Logs de API en Consola**
+```
+🌐 [MÓVIL] URL directa: https://scienti.minciencias.gov.co/gruplac/json/...
+📊 Status Code: 200
+📦 Content-Type: application/json;charset=UTF-8
+📝 Response Length: 8858 caracteres
+📋 Respuesta es una List directa con 15 elementos
+🎉 15 productos procesados exitosamente para tipología: ART_I
+```
+
+### ❌ **Logs de Error**
+```
+📊 Status Code: 500
+📦 Content-Type: text/html;charset=UTF-8
+❌ Error HTTP 500: Error Interno del Servidor
+```
+
+### 🔍 **Logs de Navegación**
+```
+🔍 Buscando producto con ID: 185 en tipología: ART_I
+✅ Producto encontrado: DINÁMICA ORGANIZACIONAL Y ADMINISTRATIVA...
+```
+
+## 📊 Tecnologías Utilizadas
+
+- **Flutter** (>=3.10.0) - Framework multiplataforma
+- **Dart** (>=3.10.0) - Lenguaje de programación
+- **go_router** (^14.2.7) - Navegación declarativa moderna
+- **http** (^1.1.0) - Cliente HTTP para APIs
+- **flutter_dotenv** (^5.1.0) - Gestión de variables de entorno
+- **Material Design 3** - Sistema de diseño de Google
+
+## 🎨 Características de UI/UX
+
+### 🎭 **Diseño**
+- **Material Design 3** con tema profesional
+- **Gradientes** específicos por categoría de investigación
+- **Cards** con sombras y border radius
+- **Iconografía** científica coherente
+- **Paleta de colores** institucional
+
+### 🧭 **Navegación**
+- **go_router** para navegación declarativa
+- **Path parameters** para IDs de categoría y producto
+- **Query parameters** para metadatos adicionales
+- **AppBar** automático con botón "Atrás"
+- **Breadcrumb** implícito en la navegación
+
+### 📱 **Responsive**
+- **Adaptive** para diferentes tamaños de pantalla
+- **GridView** responsive en home
+- **ListView** optimizado para móvil
+- **Padding** y spacing consistentes
+
+## 👨‍💻 Desarrollador
+
+**Santiago Martinez Serna**  
+🎓 Ingeniería de Sistemas  
+🏫 Universidad Católica Luis Amigó  
+📚 Desarrollo Móvil - 7° Semestre  
+📅 Octubre 2025
+
+## 📸 Capturas de Pantalla
+
+### 🏠 **Pantalla Principal (Home)**
+La interfaz principal con tabs organizados y contenido educativo sobre investigación.
+
+| Inicio | Investigación |
+|--------|---------------|
+| ![Pantalla de Inicio](image-3.png) | ![Tab de Investigación](image-4.png) |
+
+### 🔬 **Exploración de Productos de Investigación**
+Navegación hacia las categorías disponibles desde el menú principal.
+
+| Categorías de Investigación |
+|----------------------------|
+| ![Productos de Investigación](image-5.png) |
+
+### ⏳ **Estados de Carga**
+Indicadores de progreso mientras se consumen las APIs de MinCiencias.
+
+| Estado Loading |
+|----------------|
+| ![Carga de Datos](image-6.png) |
+
+### 📋 **Listados por Categoría**
+ListView.builder dinámico con productos organizados por tipología.
+
+| Lista de Productos |
+|-------------------|
+| ![Lista de Productos](image-7.png) |
+
+### 📄 **Detalle de Producto**
+Información completa del producto seleccionado obtenida directamente de la API.
+
+| Vista Detalle |
+|---------------|
+| ![Detalle del Producto](image-8.png) |
+
+### 🔍 **Logs de Consola**
+Registro del consumo exitoso de APIs con datos reales de MinCiencias.
+
+| Logs de Desarrollo |
+|-------------------|
+| ![Consola de Debug](image-9.png) |
+
+### 📊 **Productos por Tipología**
+Diferentes categorías de productos de investigación disponibles.
+
+#### 📑 **Artículos Tipo I** (Revistas Especializadas)
+| Artículos Impresos |
+|-------------------|
+| ![Artículos Tipo I](image-10.png) |
+
+#### 📄 **Artículos Tipo E** (Otras Publicaciones)
+| Artículos Digitales |
+|--------------------|
+| ![Artículos Tipo E](image-11.png) |
+
+#### 📚 **Libros de Investigación**
+| Publicaciones Académicas |
+|-------------------------|
+| ![Libros](image-12.png) |
+
+#### 📖 **Capítulos de Libros**
+| Capítulos Académicos |
+|---------------------|
+| ![Capítulos](image-13.png) |
+
+### ℹ️ **Información del Proyecto**
+Pantalla con detalles sobre el desarrollo y objetivos del taller.
+
+| Acerca De |
+|-----------|
+| ![Información](image-14.png) |
 
 ---
-*Desarrollado por Santiago Martinez - 230222014*
+
+> **📱 Nota**: Todas las imágenes muestran la aplicación funcionando con **datos reales** de las APIs de MinCiencias GrupLAC, sin uso de datos mock.
+## 🎯 Cumplimiento de Requisitos del Taller
+
+### ✅ **1. Consumo de APIs mediante HTTP**
+- ✅ Paquete `http` implementado
+- ✅ APIs reales MinCiencias (NO mock)
+- ✅ ListView.builder con datos dinámicos
+- ✅ Manejo de estados loading/success/error
+
+### ✅ **2. Navegación con go_router**
+- ✅ Rutas nombradas configuradas
+- ✅ Path parameters (categoryId, productId)
+- ✅ Query parameters (apiEndpoint)
+- ✅ Navegación lista → detalle
+
+### ✅ **3. Manejo de Estado y Validaciones**
+- ✅ Estados de loading con CircularProgressIndicator
+- ✅ Try/catch para manejo de errores
+- ✅ Validaciones null-safety
+- ✅ SnackBar con opciones de reintento
+
+### ✅ **4. Buenas Prácticas y Arquitectura**
+- ✅ Separación en carpetas (models/, services/, views/)
+- ✅ Null-safety habilitado
+- ✅ Código documentado
+- ✅ Manejo robusto de errores
+
+---
+
+**📊 Estado**: ✅ COMPLETADO AL 100%  
+**🎯 APIs**: ✅ FUNCIONANDO (ART_I: 15, ART_E: 54 productos)  
+**� Navegación**: ✅ go_router IMPLEMENTADO  
+**📱 UI/UX**: ✅ RESPONSIVE Y PROFESIONAL  
+
+---
+
+**📅 Fecha de Desarrollo**: Octubre 2025  
+**🏫 Institución**: Universidad Católica Luis Amigó  
+**📚 Materia**: Desarrollo Móvil  
+**🎯 Proyecto**: Taller Consumo de APIs y Navegación Flutter
