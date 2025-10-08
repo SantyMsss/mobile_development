@@ -17,6 +17,7 @@ class CustomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
+      type: BottomNavigationBarType.fixed, // Para mostrar 4 elementos
       currentIndex: currentIndex,
       onTap: (index) {
         onTap(index);
@@ -39,6 +40,16 @@ class CustomNavBar extends StatelessWidget {
             context.push(url);
             break;
           case 2:
+            // Navegar a Future View
+            if (kDebugMode) {
+              print("🚀=== NAVEGACIÓN A FUTURE VIEW ===");
+              print("🌐 URL: '/future'");
+              print("⚡ Método: context.push() - Future async/await demo");
+              print("================================");
+            }
+            context.push('/future');
+            break;
+          case 3:
             // Mostrar información de configuración
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
@@ -55,6 +66,7 @@ class CustomNavBar extends StatelessWidget {
       items: const [
         BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Inicio'),
         BottomNavigationBarItem(icon: Icon(Icons.navigate_next), label: 'Navegar'),
+        BottomNavigationBarItem(icon: Icon(Icons.schedule), label: 'Future'),
         BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Config'),
       ],
     );
