@@ -515,6 +515,6 @@ Pantalla con detalles sobre el desarrollo y objetivos del taller.
 ---
 
 **📅 Fecha de Desarrollo**: Octubre 2025  
-**🏫 Institución**: Universidad Católica Luis Amigó  
+**🏫 Institución**: UCEVA 
 **📚 Materia**: Desarrollo Móvil  
 **🎯 Proyecto**: Taller Consumo de APIs y Navegación Flutter
