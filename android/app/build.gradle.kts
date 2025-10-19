@@ -21,13 +21,22 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.example.mobile_development"
+        applicationId = "com.example.inv_mobile"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
-        versionCode = flutter.versionCode
-        versionName = flutter.versionName
+        
+        // ========== VERSIONADO SEMÁNTICO ==========
+        // versionCode: Número interno que Android usa para determinar actualizaciones
+        // Formato: MMMNNNOOO (Mayor.Menor.Patch)
+        // Ejemplo: 1000001 = v1.0.0, 1000002 = v1.0.1, 1001000 = v1.1.0
+        versionCode = 1000001
+        
+        // versionName: Versión visible en Google Play y Sistema
+        // Formato: MAYOR.MENOR.PATCH
+        // Sigue Semantic Versioning: https://semver.org/
+        versionName = "1.0.0"
     }
 
     buildTypes {
