@@ -425,77 +425,86 @@ flutter analyze
 
 ## 📸 Capturas de Pantalla
 
-### 🏠 **Pantalla Principal (Home)**
-La interfaz principal con tabs organizados y contenido educativo sobre investigación.
+### 📊 Comparativa de Versiones
 
-| Inicio | Investigación |
-|--------|---------------|
-| ![Pantalla de Inicio](image-3.png) | ![Tab de Investigación](image-4.png) |
+| **Versión 1.0.0** | **Versión 1.1.0** |
+|-------------------|-------------------|
+| ![Versión 1.0](Screenshot_20251019_112426_com.example.inv_mobile.jpg) | ![Versión 1.1](<Imagen de WhatsApp 2025-10-19 a las 12.10.20_bedd300b.jpg>) |
+| 4 Categorías disponibles | 6 Categorías disponibles ⭐ |
 
-### 🔬 **Exploración de Productos de Investigación**
-Navegación hacia las categorías disponibles desde el menú principal.
+---
 
-| Categorías de Investigación |
-|----------------------------|
-| ![Productos de Investigación](image-5.png) |
+### 📋 Registro de Cambios por Versión
 
-### ⏳ **Estados de Carga**
-Indicadores de progreso mientras se consumen las APIs de MinCiencias.
+**Proyecto**: INVAPP – Centro de Investigación  
+**Responsable**: Santiago Martínez  
+**Fecha de Desarrollo**: 19 de octubre de 2025
 
-| Estado Loading |
-|----------------|
-| ![Carga de Datos](image-6.png) |
+---
 
-### 📋 **Listados por Categoría**
-ListView.builder dinámico con productos organizados por tipología.
+#### 🔹 **Versión 1.0.0** (Build 1000001) - Release Inicial
+**📅 Fecha**: 19/10/2025
 
-| Lista de Productos |
-|-------------------|
-| ![Lista de Productos](image-7.png) |
+**✨ Cambios / Mejoras**
+- ✅ Versión inicial del aplicativo
+- ✅ Módulos principales implementados:
+  - 🏠 **Inicio**: Dashboard con información institucional
+  - 🔬 **Investigación**: Catálogo de productos científicos
+  - ℹ️ **Acerca de**: Información del proyecto
+- ✅ **4 Categorías de investigación**:
+  - 📰 Artículos Impresos (ART_I)
+  - 💻 Artículos Electrónicos (ART_E)
+  - 📚 Libros (LIB)
+  - 📖 Capítulos de Libro (CAP_LIB)
+- ✅ Navegación con go_router implementada
+- ✅ Estilos base con Material Design 3
 
-### 📄 **Detalle de Producto**
-Información completa del producto seleccionado obtenida directamente de la API.
+**⚠️ Incidencias Encontradas**
+- 🔸 Menú de categorías incompleto (faltaban nuevas secciones solicitadas)
+- 🔸 Carga inicial lenta en algunos dispositivos
+- 🔸 Texto en botones desbordado en pantallas pequeñas
 
-| Vista Detalle |
-|---------------|
-| ![Detalle del Producto](image-8.png) |
+**✅ Estado de Prueba**
+- ✔️ Probado e instalado correctamente desde Firebase App Distribution
+- ✔️ Versión funcional con observaciones menores
+- ✔️ APK distribuido exitosamente a testers
 
-### 🔍 **Logs de Consola**
-Registro del consumo exitoso de APIs con datos reales de MinCiencias.
+---
 
-| Logs de Desarrollo |
-|-------------------|
-| ![Consola de Debug](image-9.png) |
+#### 🔹 **Versión 1.1.0** (Build 1010001) - Nuevas Categorías ⭐
+**📅 Fecha**: 19/10/2025
 
-### 📊 **Productos por Tipología**
-Diferentes categorías de productos de investigación disponibles.
+**✨ Cambios / Mejoras**
+- ✅ **2 Nuevas categorías agregadas**:
+  - 🏭 **Prototipo Industrial (PI)**: Consulta de prototipos industriales desarrollados
+  - 💡 **Innovaciones en Gestión Empresarial (IG)**: Innovaciones generadas en gestión
+- ✅ **Catálogo ampliado**: De 4 a 6 categorías totales
+- ✅ **Integración completa** con APIs MinCiencias para PI e IG
+- ✅ **Optimización de carga** de vistas
+- ✅ Versionado semántico implementado correctamente
 
-#### 📑 **Artículos Tipo I** (Revistas Especializadas)
-| Artículos Impresos |
-|-------------------|
-| ![Artículos Tipo I](image-10.png) |
+**⚠️ Incidencias Encontradas**
+- ✔️ Validada correcta carga de nuevas categorías
+- ✔️ No se presentan cierres ni errores
+- ✔️ Interfaz y flujo general correctos
 
-#### 📄 **Artículos Tipo E** (Otras Publicaciones)
-| Artículos Digitales |
-|--------------------|
-| ![Artículos Tipo E](image-11.png) |
+**✅ Estado de Prueba**
+- ✔️ **Pruebas completadas con éxito**
+- ✔️ Instalación confirmada mediante Firebase App Distribution
+- ✔️ **Sin incidencias críticas**
+- ✔️ Rendimiento optimizado
 
-#### 📚 **Libros de Investigación**
-| Publicaciones Académicas |
-|-------------------------|
-| ![Libros](image-12.png) |
+---
 
-#### 📖 **Capítulos de Libros**
-| Capítulos Académicos |
-|---------------------|
-| ![Capítulos](image-13.png) |
+### 📊 Resumen de Evolución
 
-### ℹ️ **Información del Proyecto**
-Pantalla con detalles sobre el desarrollo y objetivos del taller.
-
-| Acerca De |
-|-----------|
-| ![Información](image-14.png) |
+| Característica | v1.0.0 | v1.1.0 |
+|----------------|--------|--------|
+| **Categorías** | 4 | 6 ⭐ |
+| **APIs Integradas** | 4 endpoints | 6 endpoints |
+| **Tamaño APK** | ~46 MB | ~46 MB |
+| **Estado** | Funcional | Optimizado |
+| **Incidencias Críticas** | 0 | 0 |
 
 ---
 
