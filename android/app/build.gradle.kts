@@ -32,13 +32,14 @@ android {
         // ========== VERSIONADO SEMÁNTICO ==========
         // versionCode: Número interno que Android usa para determinar actualizaciones
         // Formato: MMMNNNOOO (Mayor.Menor.Patch)
-        // Ejemplo: 1000001 = v1.0.0, 1000002 = v1.0.1, 1001000 = v1.1.0
-        versionCode = 1000001
+        // Ejemplo: 1000001 = v1.0.0, 1000002 = v1.0.1, 1010001 = v1.1.0
+        // v1.1.0 - Agregadas 2 nuevas categorías: Prototipo Industrial (PI) e Innovaciones Empresariales (IG)
+        versionCode = 1010001
         
         // versionName: Versión visible en Google Play y Sistema
         // Formato: MAYOR.MENOR.PATCH
         // Sigue Semantic Versioning: https://semver.org/
-        versionName = "1.0.0"
+        versionName = "1.1.0"
     }
 
     buildTypes {
