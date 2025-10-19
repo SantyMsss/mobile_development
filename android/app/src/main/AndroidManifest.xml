@@ -1,4 +1,18 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- ========== PERMISOS REQUERIDOS ========== -->
+    <!-- Permiso para acceder a internet (CRÍTICO para consumo de APIs) -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    
+    <!-- Permiso para verificar estado de conectividad de red -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    
+    <!-- Permiso para acceder a redes WiFi -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    
+    <!-- Permiso para cambiar estado de conectividad (si es necesario) -->
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    
+    <!-- ========== CONFIGURACIÓN DE APLICACIÓN ========== -->
     <application
         android:label="mobile_development"
         android:name="${applicationName}"
