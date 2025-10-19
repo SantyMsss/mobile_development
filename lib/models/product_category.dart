@@ -43,6 +43,20 @@ class ProductCategory {
         apiEndpoint: 'CAP_LIB',
         icon: '📖',
       ),
+      ProductCategory(
+        id: 'industrial_prototype',
+        name: 'Prototipo Industrial',
+        description: 'Prototipos industriales desarrollados como resultado de investigación',
+        apiEndpoint: 'PI',
+        icon: '🏭',
+      ),
+      ProductCategory(
+        id: 'business_innovation',
+        name: 'Innovaciones Empresariales',
+        description: 'Innovaciones generadas en la gestión empresarial',
+        apiEndpoint: 'IG',
+        icon: '💡',
+      ),
     ];
   }
 }

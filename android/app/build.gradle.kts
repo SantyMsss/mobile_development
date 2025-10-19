@@ -54,11 +54,12 @@ flutter {
     source = "../.."
 }
 
-// ========== DEPENDENCIAS DE FIREBASE ==========
+// ========== DEPENDENCIAS DE FIREBASE (COMENTADAS - ACTIVAR SI NECESITAS) ==========
+/*
 dependencies {
     // Import the Firebase BoM (Bill of Materials)
     // Esto asegura que todas las dependencias de Firebase sean compatibles entre sí
-    implementation(platform("com.google.firebase:firebase-bom:34.4.0"))
+    implementation(platform("com.google.firebase:firebase-bom:32.8.1"))
 
     // Firebase Core (requerido para todos los servicios)
     implementation("com.google.firebase:firebase-core")
@@ -89,3 +90,4 @@ dependencies {
 
     // Nota: Descomenta las dependencias que necesites según tu proyecto
 }
+*/
