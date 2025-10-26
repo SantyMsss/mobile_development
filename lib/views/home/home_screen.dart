@@ -32,6 +32,15 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.account_circle),
+              tooltip: 'Perfil',
+              onPressed: () {
+                context.push('/profile');
+              },
+            ),
+          ],
           bottom: const TabBar(
             labelColor: Colors.white,
             unselectedLabelColor: Colors.white70,
