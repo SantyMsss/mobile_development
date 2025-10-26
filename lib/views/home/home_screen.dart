@@ -12,7 +12,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   String appBarTitle = "Centro de Investigación";
-  final String studentName = "Santiago Martinez Serna";
+  final String studentName = "Investigador UCEVA";
   int _currentTabIndex = 0;
 
   @override
