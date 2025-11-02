@@ -11,10 +11,13 @@ import '../views/profile/profile_screen.dart';
 import '../views/easysave/easysave_screen.dart';
 import '../views/easysave/ingresos_screen.dart';
 import '../views/easysave/gastos_screen.dart';
-import '../services/storage_service.dart';
+import '../views/colecciones_fb/universidad_fb_list_view.dart';
+import '../views/colecciones_fb/universidad_fb_form_view.dart';
 
 final GoRouter appRouter = GoRouter(
-  initialLocation: '/easysave',
+  initialLocation: '/universidadesFirebase',
+  // Comentado: redirección al login deshabilitada
+  /*
   redirect: (context, state) async {
     final storage = StorageService();
     final isLoggedIn = await storage.isLoggedIn();
@@ -33,6 +36,7 @@ final GoRouter appRouter = GoRouter(
 
     return null; // No redirigir
   },
+  */
   routes: [
     // Rutas de autenticación (públicas)
     GoRoute(
@@ -114,6 +118,26 @@ final GoRouter appRouter = GoRouter(
           productId: productId,
           apiEndpoint: apiEndpoint,
         );
+      },
+    ),
+
+    //! Rutas para el manejo de Universidades (CRUD)
+    GoRoute(
+      path: '/universidadesFirebase',
+      name: 'universidadesFirebase',
+      builder: (_, __) => const UniversidadFbListView(),
+    ),
+    GoRoute(
+      path: '/universidadesfb/create',
+      name: 'universidadesfb.create',
+      builder: (context, state) => const UniversidadFbFormView(),
+    ),
+    GoRoute(
+      path: '/universidadesfb/edit/:id',
+      name: 'universidades.edit',
+      builder: (context, state) {
+        final id = state.pathParameters['id']!;
+        return UniversidadFbFormView(id: id);
       },
     ),
   ],
