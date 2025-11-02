@@ -55,8 +55,7 @@ flutter {
     source = "../.."
 }
 
-// ========== DEPENDENCIAS DE FIREBASE (COMENTADAS - ACTIVAR SI NECESITAS) ==========
-/*
+// ========== DEPENDENCIAS DE FIREBASE ==========
 dependencies {
     // Import the Firebase BoM (Bill of Materials)
     // Esto asegura que todas las dependencias de Firebase sean compatibles entre sí
@@ -68,11 +67,11 @@ dependencies {
     // Firebase Analytics (análisis de eventos de usuario)
     implementation("com.google.firebase:firebase-analytics")
 
+    // Firebase Firestore (base de datos NoSQL)
+    implementation("com.google.firebase:firebase-firestore")
+
     // Firebase Authentication (autenticación de usuarios)
     // implementation("com.google.firebase:firebase-auth")
-
-    // Firebase Firestore (base de datos NoSQL)
-    // implementation("com.google.firebase:firebase-firestore")
 
     // Firebase Storage (almacenamiento de archivos)
     // implementation("com.google.firebase:firebase-storage")
@@ -89,6 +88,7 @@ dependencies {
     // Firebase Remote Config (configuración remota)
     // implementation("com.google.firebase:firebase-config")
 
-    // Nota: Descomenta las dependencias que necesites según tu proyecto
+    // Nota: Se han activado Core, Analytics y Firestore. 
+    // Descomenta las demás dependencias que necesites según tu proyecto
 }
-*/
+
